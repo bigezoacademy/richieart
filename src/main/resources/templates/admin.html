@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/dashboardadmin}" >
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#uploadForm").submit(function (event) {
+                event.preventDefault();
+                var formData = new FormData($(this)[0]);
+                var progressBar = $("#progressBar");
+
+                $.ajax({
+                    url: "/uploadProject",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = (evt.loaded / evt.total) * 100;
+                                progressBar.css("width", percentComplete + "%");
+                                progressBar.html("Uploading..." + Math.floor(percentComplete) + "%");
+
+                            if (percentComplete == 78) {
+                                    // Keep the progress at 78% until upload is complete
+                                    progressBar.css("width", "78%");
+                                    progressBar.html("Uploading... " +"78%");
+                                }
+
+                                    if (percentComplete >= 90) {
+                                    // Keep the progress at 90% until upload is complete
+                                    progressBar.css("width", "90%");
+                                    progressBar.html("Uploading... " +"90%");
+                                }
+                            }
+                        }, false);
+                        return xhr;
+                    },
+                    success: function (response) {
+                        progressBar.addClass("progress-bar-success")
+                            .html("Upload complete!"); // Show success message
+                            // Load the "upload-docs" page after a brief delay
+                        setTimeout(function() {
+                            window.location.href = '/admin';
+                        }, 500); // Delay in milliseconds (2 seconds)
+                    },
+                    error: function () {
+                        progressBar.addClass("progress-bar-danger")
+                            .html("Failed to upload new project!"); // Show error message
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#uploadArticleForm").submit(function (event) {
+                event.preventDefault();
+                var formData = new FormData($(this)[0]);
+                var progressBar = $("#progressBarArticle");
+
+                $.ajax({
+                    url: "/uploadArticle",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = (evt.loaded / evt.total) * 100;
+                                progressBar.css("width", percentComplete + "%");
+                                progressBar.html("Uploading..." + Math.floor(percentComplete) + "%");
+
+                            if (percentComplete == 78) {
+                                    // Keep the progress at 78% until upload is complete
+                                    progressBar.css("width", "78%");
+                                    progressBar.html("Uploading... " +"78%");
+                                }
+
+                                    if (percentComplete >= 90) {
+                                    // Keep the progress at 90% until upload is complete
+                                    progressBar.css("width", "90%");
+                                    progressBar.html("Uploading... " +"90%");
+                                }
+                            }
+                        }, false);
+                        return xhr;
+                    },
+                    success: function (response) {
+                        progressBar.addClass("progress-bar-success")
+                            .html("Upload complete!");
+                        setTimeout(function() {
+                            window.location.href = '/articles';
+                        }, 500); // Delay in milliseconds (2 seconds)
+                    },
+                    error: function () {
+                        progressBar.addClass("bg-danger")
+                            .html("Failed to upload new article!"); // Show error message
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div layout:fragment="~{content}" >
+
+    <div class="p-0 row m-0 mt-5 pt-5" >
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Options button for small screens -->
+                <button
+                        class="btn btn-primary d-md-none"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#optionsCollapse"
+                        aria-expanded="false"
+                        aria-controls="optionsCollapse">
+                    <i class="bi bi-three-dots-vertical"></i> Options
+                </button>
+
+                <!-- Sidenav -->
+                <ul
+                        class="sidenav text-dark collapse d-md-block"
+                        id="optionsCollapse">
+                    <li class="nav-item" style="display: none">
+                        <a
+                                href="#"
+                                class="nav-link sidenavoption"
+                                onclick="changeOption(this)"
+                                data-target-content="changepassword">
+                            <i class="bi me-3 bi-key"></i> Change Password
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                href="#"
+                                class="nav-link sidenavoption"
+                                onclick="changeOption(this)"
+                                data-target-content="categories">
+                            <i class="bi me-3 bi-tags"></i> Uploaded Categories
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a
+                                th:href="@{/}"
+                                class="nav-link sidenavoption"
+                                >
+                            <i class="bi me-3 bi-house-check"></i>Edit Uploaded Projects
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                href="#"
+                                class="nav-link sidenavoption"
+                                onclick="changeOption(this)"
+                                data-target-content="newproject">
+                            <i class="bi me-3 bi-plus"></i> New Project
+                        </a>
+                    </li>
+                    <li class="nav-item" >
+                        <a
+                                th:href="@{/articles}"
+                                class="nav-link sidenavoption">
+                            <i class="bi me-3 bi-book"></i> Edit Uploaded Articles
+                        </a>
+                    </li>
+                    <li class="nav-item" >
+                        <a
+                                href="#"
+                                class="nav-link sidenavoption"
+                                onclick="changeOption(this)"
+                                data-target-content="newarticle">
+                            <i class="bi me-3 bi-plus"></i>Create New Article
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-9">
+                <div class="adminoption ps-3">
+                    <h2 class="p-0 m-0 p-sm-3 pt-5">Admin Dashboard <i class="bi bi-database-lock"></i></h2>
+
+                    <p class="p-3"> This is your admin dashboard...</p>
+                    <h3 th:if="${uploadSuccess}" class="alert alert-success">
+                        <i class="bi bi-check-circle-fill text-success"></i> Published Successfully
+                    </h3>
+                    <h3 th:if="${uploadError}" class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle-fill text-danger"></i> Publish failed !
+                    </h3>
+                </div>
+                <div class="adminoption" id="changepassword" style="display: none">
+                    <!-- Content for Change Password -->
+                    <h2 class="pt-5">Change Password</h2>
+                    <form class="text-larger m-sm-3 col-md-4">
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    id="username"
+                                    placeholder="New username"
+                                    required />
+                        </div>
+                        <div class="mb-3">
+                            <input
+                                    type="password"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    id="password"
+                                    placeholder="New password"
+                                    required />
+                        </div>
+
+                        <button
+                                type="submit"
+                                class="btn btn-dark mb-3 w-100"
+                                onclick="window.location.href='admin.html'">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+                <div class="adminoption" id="categories" style="display: none">
+                    <!-- Content for Categories -->
+                    <!-- categories-content.html -->
+                    <h2>Categories</h2>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Category Name</th>
+
+                            </tr>
+                            </thead>
+                            <tbody id="categoriesTableBody">
+                            <!-- Categories will be dynamically loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <script th:src="@{js/categories.js}"></script>
+
+                </div>
+
+
+
+                <div class="adminoption" id="projects" style="display: none">
+                    <!-- Content for Change Password -->
+                    <h2 class="pt-5">My Projects</h2>
+                    <p>Choose category</p>
+                    <div class="row myprojectcategories">
+
+
+                    </div>
+                    <script th:src="@{js/loadprojects.js}"></script>
+
+                </div>
+
+                <div class="adminoption"  id="newproject" style="display: none">
+                    <h2 class="mt-3">New Project</h2>
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label>Project Code:</label>
+                            <input type="text" name="projectCode" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" required />
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" name="projectVideoUrl" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"  placeholder="Project Video URL" required />
+                        </div>
+                        <div class="mb-3">
+                            <label>Category:</label>
+                            <select name="category" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"  >
+
+                                <option>SINGLE FLOOR</option>
+                                <option>STORIED HOUSES</option>
+                            </select>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label>Project Description:</label>
+                            <textarea name="description"  class="form-control  textarea  w-100 p-3 border-2 border-dark" placeholder="Project Description"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Cost Estimates:</label>
+                            <textarea name="materialSchedule"  class="form-control  textarea  w-100 p-3 border-2 border-dark" placeholder="Cost Estimates"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Number of Floors:</label>
+                            <input type="number" name="numberOfFloors" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Number of Bedrooms:</label>
+                            <input type="number" name="numberOfBedrooms" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Number of Bathrooms:</label>
+                            <input type="number" name="numberOfBathrooms" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Area of House:</label>
+                            <input type="text" name="areaOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Width of House:</label>
+                            <input type="text" name="widthOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Depth of House:</label>
+                            <input type="text" name="depthOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" required />
+                        </div>
+
+                        <!-- Add other input fields as needed based on the Project model -->
+
+                        <div class="mb-3">
+                            <label>Thumbnail Photo:</label>
+                            <input type="file" name="thumbnailFile" class="form-control" accept="image/*" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Main Cover Photo:</label>
+                            <input type="file" name="imageFile1" class="form-control" accept="image/*" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Photo 2:</label>
+                            <input type="file" name="imageFile2" class="form-control" accept="image/*" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Photo 3:</label>
+                            <input type="file" name="imageFile3" class="form-control" accept="image/*" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Photo 4:</label>
+                            <input type="file" name="imageFile4" class="form-control" accept="image/*" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Photo 5:</label>
+                            <input type="file" name="imageFile5" class="form-control" accept="image/*" required />
+                        </div>
+                        <!-- display the progress bar -->
+                        <div class="progress mb-2">
+                            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                        </div>
+
+                        <button type="reset" class="btn px-5 btn-dark mb-3">
+                            <i class="bi me-3 bi-x-circle"></i>     Clear
+                        </button>
+                        <button type="submit" class="btn px-5 btn-success mb-3">Publish <i class="bi me-3 bi-arrow-right"></i></button>
+                    </form>
+                </div>
+
+
+                <div class="adminoption" id="articles" style="display: none">
+
+                    <h2 class="pt-5">Articles</h2>
+                    <div class="row">
+                        <div class="col-12 row mb-3">
+                            <div class="col-md-3">
+                                <img src="images/2.jpeg" alt="" class="img-fluid">
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="py-1 fw-bold">
+                                    This is heading of article 1
+                                </h3>
+                                <p class="p-3 ">
+                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur porro nisi accusantium optio quibusdam error. Id dignissimos odit consectetur nam impedit beatae! Veniam expedita illum et aperiam distinctio repellat dolor?
+                                </p>
+
+                            </div>
+                            <div class="col-md-3">
+                                <p class="py-3">
+                                    <button class="btn px-5 py-1 btn-dark">  <i class="bi me-1 bi-pencil-square"></i>
+                                        Edit Article</button>
+                                </p>
+                                <p class="py-3">
+                                    <button class="btn px-5 py-1 btn-danger">  <i class="bi me-1 bi-trash"></i>
+                                        Delete Article</button>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 row mb-3">
+                            <div class="col-md-3">
+                                <img src="images/2.jpeg" alt="" class="img-fluid">
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="py-1 fw-bold">
+                                    This is heading of article 2
+                                </h3>
+                                <p class="p-3 ">
+                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur porro nisi accusantium optio quibusdam error. Id dignissimos odit consectetur nam impedit beatae! Veniam expedita illum et aperiam distinctio repellat dolor?
+                                </p>
+
+                            </div>
+                            <div class="col-md-3">
+                                <p class="py-3">
+                                    <button class="btn px-5 py-1 btn-dark">  <i class="bi me-1 bi-pencil-square"></i>
+                                        Edit Article</button>
+                                </p>
+                                <p class="py-3">
+                                    <button class="btn px-5 py-1 btn-danger">  <i class="bi me-1 bi-trash"></i>
+                                        Delete Article</button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="adminoption" id="newarticle" style="display: none">
+                    <!-- Content for New Category -->
+                    <h2 class="pt-5"> New Article</h2>
+                    <form id="uploadArticleForm"  enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    id="articleTitle"
+                                    name="title"
+                                    placeholder="Title of article *"
+                                    required />
+                        </div>
+                        <div class="mb-3">       <textarea
+                                name="promptText"
+                                class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                                placeholder="Type here your short prompt (Max 100 characters) text... *" maxlength="100"  required></textarea>
+                </div>
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    name="author"
+                                    placeholder="Written by : (optional)"
+                            />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="">Article photo</label>
+                            <input
+                                    type="file" accept="image/*"
+                                    class="form-control"
+                                    name="storyPhoto"
+                                    />
+                        </div>
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    id="subTitle" name="subTitle"
+                                    placeholder="Subtitle  (optional)"
+                            />
+                        </div>
+                        <div class="mb-3">
+                <textarea
+                        name="paragraph"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                        placeholder="paragraph"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    id="subTitle1" name="subTitle1"
+                                    placeholder="Subtitle 1 (optional)"
+                                    />
+                        </div>
+                        <div class="mb-3">
+                <textarea
+                        name="paragraph1"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                        placeholder="paragraph 1"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    id="subTitle2" name="subTitle2"
+                                    placeholder="Subtitle 2 (optional)"
+                            />
+                        </div>
+                        <div class="mb-3">
+                <textarea
+                        name="paragraph2"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                        placeholder="paragraph 2 (optional)"></textarea>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    name="subTitle3"
+                                    placeholder="Subtitle 3 (optional)"
+                            />
+                        </div>
+                        <div class="mb-3">
+                <textarea
+                        name="paragraph3"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                        placeholder="paragraph 3 (optional)"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    name="subTitle4"
+                                    placeholder="Subtitle 4 (optional)"
+                            />
+                        </div>
+                        <div class="mb-3">
+                <textarea
+                        name="paragraph4"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                        placeholder="paragraph 4 (optional)"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    id="subTitle5" name="subTitle5"
+                                    placeholder="Subtitle 5 (optional)"
+                            />
+                        </div>
+                        <div class="mb-3">
+                <textarea
+                        name="paragraph5"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                        placeholder="paragraph 5 (optional)"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    id="subTitle6" name="subTitle6"
+                                    placeholder="Subtitle 6 (optional)"
+                            />
+                        </div>
+                        <div class="mb-3">
+                <textarea
+                        name="paragraph6"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                        placeholder="paragraph 6 (optional)"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    id="subTitle7" name="subTitle7"
+                                    placeholder="Subtitle 7 (optional)"
+                            />
+                        </div>
+                        <div class="mb-3">
+                <textarea
+                        name="paragraph8"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                        placeholder="paragraph 8 (optional)"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    name="subTitle9"
+                                    placeholder="Subtitle 9 (optional)"
+                            />
+                        </div>
+                        <div class="mb-3">
+                <textarea
+                        name="paragraph9"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                        placeholder="paragraph 9 (optional)"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                    name="subTitle10"
+                                    placeholder="Subtitle 10 (optional)"
+                            />
+                        </div>
+                        <div class="mb-3">
+                <textarea
+                        name="paragraph10"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                        placeholder="paragraph 10 (optional)"></textarea>
+                        </div>
+                        <div class="progress mb-2">
+                            <div id="progressBarArticle" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                        </div>
+                        <p class="my-3">
+                            <button type="reset" class="btn w-10 btn-dark mb-3">
+                                Clear
+                            </button>
+                            <button type="submit" class="btn w-25 btn-dark mb-3">
+                                Submit
+                            </button>
+                        </p>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script>
+        // JavaScript to open the modal when a carousel-item is clicked
+        document.addEventListener("DOMContentLoaded", function () {
+          const carouselItems = document.querySelectorAll(".carousel-item");
+
+          carouselItems.forEach((item, index) => {
+            item.addEventListener("click", function () {
+              document.getElementById("fullScreenImage").src =
+                this.querySelector("img").src;
+              document
+                .getElementById("fullScreenModal")
+                .setAttribute("data-bs-target", "#carouselExample");
+              document.getElementById("fullScreenModal").classList.add("show");
+              document.getElementById("fullScreenModal").style.display = "block";
+            });
+          });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script th:src="@{js/loadcategoriesdropdown.js}"></script>
+
+    <script>
+        function changeOption(clickedOption) {
+          // Remove 'selectedsidenav' class from all sidenav options
+          loadCategories();
+          const sidenavOptions = document.querySelectorAll(".sidenavoption");
+          sidenavOptions.forEach((option) => {
+            option.classList.remove("selectedsidenav");
+          });
+
+          // Add 'selectedsidenav' class to the clicked sidenav option
+          clickedOption.classList.add("selectedsidenav");
+
+          // Hide all content divs
+          const contentDivs = document.querySelectorAll(".adminoption");
+          contentDivs.forEach((div) => {
+            div.style.display = "none";
+          });
+
+          // Display the corresponding content div
+          const targetContentId = clickedOption.dataset.targetContent;
+          const selectedContentDiv = document.getElementById(targetContentId);
+          selectedContentDiv.style.display = "block";
+        }
+    </script>
+
+
+    <script>
+        function confirmDelete() {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this category!',
+            icon: 'warning',
+            showCancelButton: true,
+            buttonsStyling: false, // Disable default button styling
+            customClass: {
+              confirmButton: 'btn btn-danger mx-3',
+              cancelButton: 'btn btn-dark',
+            },
+
+            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Add logic to handle delete here
+              Swal.fire('Deleted!', 'The category has been deleted.', 'success');
+            }
+          });
+        }
+
+
+          function editCategory(categoryName) {
+          Swal.fire({
+            title: 'Edit Category',
+            input: 'text',
+            inputValue: categoryName,
+            showCancelButton: true,
+            buttonsStyling: false, // Disable default button styling
+            customClass: {
+
+              cancelButton: 'btn btn-dark mx-3',
+              confirmButton: 'btn btn-success '
+            },
+            confirmButtonText: 'Submit',
+            cancelButtonText: 'Cancel',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              const newCategoryName = result.value;
+              // Add logic to handle edit here with newCategoryName
+              Swal.fire('Updated!', `Category has been updated to ${newCategoryName}`, 'success');
+            }
+          });
+        }
+
+    </script>
+
+
+    <script>
+
+        // Call loadCategories when the 'Categories' button is clicked
+
+        $('.sidenavoption[data-target-content="categories"]').on('click', function () {
+            changeOption(this); // Assuming this function shows/hides the appropriate content
+            loadCategories();   // Load categories dynamically
+        });
+
+           $('.sidenavoption[data-target-content="newproject"]').on('click', function () {
+            changeOption(this); // Assuming this function shows/hides the appropriate content
+            //loadCategoriesDropdown();   // Load categories dynamically
+        });
+
+    </script>
+</div>
+</body>
+</html>

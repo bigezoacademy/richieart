@@ -1,0 +1,47 @@
+<div class="p-3 -body" th:fragment="businesses">
+
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+            <tr class="bg-dark text-light">
+                <th>Name</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Country</th>
+                <th>City</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+
+
+                <td>Claire's beauty salon</td>
+                <td>Beauty</td>
+                <td>USD 23,000</td>
+                <td>Uganda</td>
+                <td>Kampala</td>
+                <td>2010/07/14</td>
+                <td class="text-success"> <i class="fas fa-fw fa-check-circle"></i> Approved</td>
+                 <td>
+                    <a class="btn btn-primary mr=2 mb-2"  th:href="@{businessdetails}">  <i class="fas fa-fw fa-list"></i> Details</a>  <a class="btn  btn-danger mr=2 mb-2" th:href="@{generalbusinessdetails}">  <i class="fas fa-fw fa-cart"></i> Buy</a>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        <script>
+  $(document).ready(function() {
+    $('#dataTable').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10],
+    });
+  });
+</script>
+    </div>
+</div>

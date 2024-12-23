@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layouts/home}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Article Details</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#editArticleForm").submit(function (event) {
+                event.preventDefault();
+                var formData = new FormData($(this)[0]);
+                var progressBar = $("#progressBarArticle");
+
+                $.ajax({
+                    url: "/editOneArticle",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = (evt.loaded / evt.total) * 100;
+                                progressBar.css("width", percentComplete + "%");
+                                progressBar.html("Uploading..." + Math.floor(percentComplete) + "%");
+
+                            if (percentComplete == 78) {
+                                    // Keep the progress at 78% until upload is complete
+                                    progressBar.css("width", "78%");
+                                    progressBar.html("Uploading... " +"78%");
+                                }
+
+                                    if (percentComplete >= 90) {
+                                    // Keep the progress at 90% until upload is complete
+                                    progressBar.css("width", "90%");
+                                    progressBar.html("Uploading... " +"90%");
+                                }
+                            }
+                        }, false);
+                        return xhr;
+                    },
+                    success: function (response) {
+                        progressBar.addClass("progress-bar-success")
+                            .html("Upload complete!");
+                        setTimeout(function() {
+                            window.location.href = '/articles';
+                        }, 500); // Delay in milliseconds (2 seconds)
+                    },
+                    error: function () {
+                        progressBar.addClass("bg-danger")
+                            .html("Failed to upload new article!"); // Show error message
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+<div layout:fragment="~{content}">
+    <div class="p-0 row mt-5 pt-5">
+        <div class="container-fluid mt-3 col-md-9 mx-auto">
+            <p class="fw-bold text-left p-3">
+                <a th:href="@{/articles}" class="text-dark">OTHER ARTICLES</a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/admin}"
+                   class=" btn btn-dark btn-sm ms-md-5">
+                    <i class="bi bi-arrow-left"></i> Admin Dashboard
+                </a>
+            </p>
+
+            <form id="editArticleForm"   enctype="multipart/form-data">
+                <input type="hidden" name="id" th:value="${article.id}" />
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            id="articleTitle"
+                            name="title"
+                            th:value="${article.title}"
+                    />
+                </div>
+                <div class="mb-3">       <textarea
+                        name="promptText"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                        th:text="${article.promptText}" placeholder="Type here your short prompt (Max 100 characters) text... *" maxlength="100"  required></textarea>
+                </div>
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            name="author"
+                            th:value="${article.author}"
+                    />
+                </div>
+
+                <div class="mb-3">
+                    <label for="">Article photo</label>
+                    <input
+                            type="file" accept="image/*"
+                            class="form-control"
+                            name="storyPhoto"
+                    />
+                    <img th:if="${article.storyPhotoUrl}" th:src="${article.storyPhotoUrl}" class="img-fluid mt-2 editarticlepic" alt="Image 1">
+                </div>
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            id="subTitle" name="subTitle"
+                            placeholder="sub title (optional)"  th:value="${article.subTitle}"
+                    />
+                </div>
+                <div class="mb-3">
+                <textarea   name="paragraph"  class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark" placeholder="Main paragraph ---currently empty"     th:text="${article.paragraph}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            id="subTitle1" name="subTitle1"
+                            placeholder="sub title (optional)"  th:value="${article.subTitle1}"
+                    />
+                </div>
+                <div class="mb-3">
+                <textarea
+                        name="paragraph1"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                         placeholder="type here another paragraph..."  th:text="${article.paragraph1}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            id="subTitle2" name="subTitle2"
+                            placeholder="sub title (optional)"  th:value="${article.subTitle2}"
+                    />
+                </div>
+                <div class="mb-3">
+                <textarea
+                        name="paragraph2"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                         placeholder="type here another paragraph..."  th:text="${article.paragraph2}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            id="subTitle3" name="subTitle3"
+                            placeholder="sub title (optional)"  th:value="${article.subTitle3}"
+                    />
+                </div>
+                <div class="mb-3">
+                <textarea
+                        name="paragraph3"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                         placeholder="type here another paragraph..."  th:text="${article.paragraph3}"></textarea>
+                </div>
+
+
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            name="subTitle4"
+                            placeholder="sub title (optional)"  th:value="${article.subTitle4}"
+                    />
+                </div>
+                <div class="mb-3">
+                <textarea
+                        name="paragraph4"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                         placeholder="type here another paragraph..."  th:text="${article.paragraph4}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            id="subTitle5" name="subTitle5"
+                            placeholder="sub title (optional)"  th:value="${article.subTitle5}"
+                    />
+                </div>
+                <div class="mb-3">
+                <textarea
+                        name="paragraph5"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                         placeholder="type here another paragraph..."  th:text="${article.paragraph5}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            id="subTitle6" name="subTitle6"
+                            placeholder="sub title (optional)"  th:value="${article.subTitle6}"
+                    />
+                </div>
+                <div class="mb-3">
+                <textarea
+                        name="paragraph6"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                         placeholder="type here another paragraph..."  th:text="${article.paragraph6}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            id="subTitle7" name="subTitle7"
+                            placeholder="sub title (optional)"  th:value="${article.subTitle7}"
+                    />
+                </div>
+                <div class="mb-3">
+                <textarea
+                        name="paragraph7"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                         placeholder="type here another paragraph..."  th:text="${article.paragraph7}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            id="subTitle8" name="subTitle8"
+                            placeholder="sub title (optional)"  th:value="${article.subTitle8}"
+                    />
+                </div>
+                <div class="mb-3">
+                <textarea
+                        name="paragraph8"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                         placeholder="type here another paragraph..."  th:text="${article.paragraph8}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            name="subTitle9"
+                            placeholder="sub title (optional)"  th:value="${article.subTitle9}"
+                    />
+                </div>
+                <div class="mb-3">
+                <textarea
+                        name="paragraph9"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                         placeholder="type here another paragraph..."  th:text="${article.paragraph9}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input
+                            type="text"
+                            class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                            name="subTitle10"
+                            placeholder="sub title (optional)"  th:value="${article.subTitle10}"
+                    />
+                </div>
+                <div class="mb-3">
+                <textarea
+                        name="paragraph10"
+                        class="form-control border-o border-bottom  textarea  w-100 p-3  border-dark"
+                         placeholder="type here another paragraph..."  th:text="${article.paragraph10}"></textarea>
+                </div>
+                <div class="progress mb-2">
+                    <div id="progressBarArticle" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                </div>
+                <p class="my-3">
+                    <button type="reset" class="btn w-10 btn-dark mb-3">
+                        Clear
+                    </button>
+                    <button type="submit" class="btn w-25 btn-dark mb-3">
+                        Submit
+                    </button>
+                </p>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

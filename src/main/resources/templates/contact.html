@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/home}" >
+
+<body>
+<div layout:fragment="~{content}">
+
+    <header class="contactbg text-white text-center">
+        <div class="container mt-5 pt-5">
+            <img th:src="@{/images/logo2.png}" class="contactimage">
+            <p class="h5 text-dark text-center fw-bold py-5">
+                Send us a message
+            </p>
+        </div>
+    </header>
+    <div class="row mt-4 ">
+
+        <div th:if="${success}" class="alert alert-success text-center">
+            <i class="fa-regular fa-circle-check text-success"></i>
+            Your message has been sent successfully.
+            <p class="text-success my-3 text-center">
+                We shall send you feedback through your email/phone. THANK YOU</p>
+        </div>
+
+        <div th:if="${error}" class="alert alert-danger text-center">
+            <i class="fa-solid fa-triangle-exclamation text-danger"></i>
+            Error sending message. Please try again or send us a WhatsApp message.
+        </div>
+
+    </div>
+
+    <div class="row container-fluid mb-5">
+        <div class="col-md-4">
+        </div>
+
+        <div class="col-md-4">
+            <form id="contactForm" th:action="@{/contact}" method="post" th:object="${contactForm}" class="px-4">
+                <div class="mb-3 row">
+                    <div class="input p-0 m-0">
+                        <input type="text" id="name" autofocus="autofocus" placeholder="Your name"
+                               class="form-control border-dark border-2  border-2 text-center border-0 border-bottom border-2 text-center" required name="name" th:field="*{name}">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="input p-0 m-0">
+                        <input type="text" id="phone" autofocus="autofocus" placeholder="Your Phone"
+                               class="form-control border-dark border-2  border-2 text-center" required name="phone" th:field="*{phone}">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="input p-0 m-0">
+                        <input type="text" id="email" autofocus="autofocus" placeholder="Your Email"
+                               class="form-control border-dark border-2  border-2 text-center" required name="email" th:field="*{email}">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="input p-0 m-0">
+                        <textarea type="text"  id="message" autofocus="autofocus" placeholder="Type a message"
+                                  class="form-control border-dark border-2 text-center" required name="message" th:field="*{message}"></textarea>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- Add a progress bar to show progress -->
+                    <div class="progress mb-3" style="display: none;">
+                        <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <button type="submit" class="btn btn-dark border-0 w-100">
+                        Send Message
+                    </button>
+                </div>
+            </form>
+
+
+        </div>
+
+
+        <div class="col-md-4">
+            <p class=" ps-3 my-3"><a th:href="@{/}" class="btn btn-dark"><i class="fa-solid fa-arrow-left"></i> HOME</a></p>
+        </div>
+    </div>
+    <p class=" details mx-auto  text-center">
+
+        <a class="btn rounded-0 chat" th:href="@{'https://wa.me/+256776407600?text=Hello Richieart construction, ...: '}">
+            <i class="bi bi-whatsapp"></i> Chat via whatsapp
+        </a></p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $('#contactForm').submit(function(event) {
+            event.preventDefault();
+
+            var formData = new FormData(this);
+
+            // Display the progress bar
+            $('#progressBar').parent().show();
+
+            $.ajax({
+                type: 'POST',
+                url: '/contact',
+                data: formData,
+                processData: false,
+                contentType: false,
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+
+                    // Upload progress
+                    xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = (evt.loaded / evt.total) * 100;
+                            $('#progressBar').width(percentComplete + '%');
+                        }
+                    }, false);
+
+
+                    xhr.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = (evt.loaded / evt.total) * 100;
+                            $('#progressBar').width(percentComplete + '%');
+                        }
+                    }, false);
+
+                    return xhr;
+                },
+                success: function(response) {
+                    console.log(response);
+
+                    // Hide the progress bar on success
+                    $('#progressBar').parent().hide();
+
+                    // Handle success response here
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error during the AJAX request. Status: ' + status + ', Error: ' + error);
+
+                    // Hide the progress bar on error
+                    $('#progressBar').parent().hide();
+
+                    // Handle error response here
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

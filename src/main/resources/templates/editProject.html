@@ -1,0 +1,140 @@
+<!-- editProject.html -->
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/home}" >
+
+<body>
+<div layout:fragment="~{content}">
+   <div class="row mt-5 pt-5">
+     <div class="col-md-2"></div>
+       <div class="col-md-8">
+           <h2 class="mt-3">Edit Project</h2>
+           <form id="editProjectForm" th:action="@{/editOneProject}" method="POST" enctype="multipart/form-data">
+               <input type="hidden" name="id" th:value="${project.id}" />
+
+               <div class="mb-3">
+                   <label>Project Code:</label>
+                   <input type="text" name="projectCode" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.projectCode}" required />
+               </div>
+               <div class="mb-3">
+                   <label>Project Video:</label>
+                   <input type="text" name="projectVideoUrl" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.projectVideoUrl}" required />
+               </div>
+
+               <div class="mb-3">
+                   <label>Category:</label>
+                   <select name="category" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.category}" >
+                       <option>SINGLE FLOOR</option>
+                       <option>STORIED HOUSES</option>
+                   </select>
+               </div>
+
+               <div class="mb-3">
+                   <label>Project Description:</label>
+                   <textarea name="description" class="form-control textarea w-100 p-3 border-2 border-dark" placeholder="Project Description" th:text="${project.description}"></textarea>
+               </div>
+
+               <div class="mb-3">
+                   <label>Cost Estimates:</label>
+                   <textarea name="materialSchedule" class="form-control textarea w-100 p-3 border-2 border-dark" placeholder="Cost Estimates" th:text="${project.materialSchedule}"></textarea>
+               </div>
+
+               <div class="mb-3">
+                   <label>Number of Floors:</label>
+                   <input type="number" name="numberOfFloors" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.numberOfFloors}" required />
+               </div>
+
+               <div class="mb-3">
+                   <label>Number of Bedrooms:</label>
+                   <input type="number" name="numberOfBedrooms" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.numberOfBedrooms}" required />
+               </div>
+
+               <div class="mb-3">
+                   <label>Number of Bathrooms:</label>
+                   <input type="number" name="numberOfBathrooms" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.numberOfBathrooms}" required />
+               </div>
+
+               <div class="mb-3">
+                   <label>Area of House:</label>
+                   <input type="text" name="areaOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.areaOfHouse}" required />
+               </div>
+
+               <div class="mb-3">
+                   <label>Width of House:</label>
+                   <input type="text" name="widthOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.widthOfHouse}" required />
+               </div>
+
+               <div class="mb-3">
+                   <label>Depth of House:</label>
+                   <input type="text" name="depthOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.depthOfHouse}" required />
+               </div>
+
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label>Thumbnail Photo:</label>
+                    <input type="file" name="thumbnailFile" class="form-control" accept="image/*" />
+                    <!-- Display the current thumbnail image if available -->
+                    <img th:if="${project.thumbnailImage}" th:src="${project.thumbnailImage}" class="img-fluid mt-2 editpic" alt="Thumbnail">
+                </div>
+
+                <div class="mb-3 col-md-4">
+                    <label>Main Cover Photo:</label>
+                    <input type="file" name="imageFile1" class="form-control" accept="image/*" />
+                    <!-- Display the current image 1 if available -->
+                    <img th:if="${project.imageUrl1}" th:src="${project.imageUrl1}" class="img-fluid mt-2 editpic" alt="Image 1">
+                </div>
+
+                <div class="mb-3 col-md-4">
+                    <label>Photo 2:</label>
+                    <input type="file" name="imageFile2" class="form-control" accept="image/*" />
+                    <!-- Display the current image 2 if available -->
+                    <img th:if="${project.imageUrl2}" th:src="${project.imageUrl2}" class="img-fluid mt-2 editpic" alt="Image 2">
+                </div>
+
+                <div class="mb-3 col-md-4">
+                    <label>Photo 3:</label>
+                    <input type="file" name="imageFile3" class="form-control" accept="image/*" />
+                    <!-- Display the current image 3 if available -->
+                    <img th:if="${project.imageUrl3}" th:src="${project.imageUrl3}" class="img-fluid mt-2 editpic" alt="Image 3">
+                </div>
+
+                <div class="mb-3 col-md-4">
+                    <label>Photo 4:</label>
+                    <input type="file" name="imageFile4" class="form-control" accept="image/*" />
+                    <!-- Display the current image 4 if available -->
+                    <img th:if="${project.imageUrl4}" th:src="${project.imageUrl4}" class="img-fluid mt-2 editpic" alt="Image 4">
+                </div>
+
+                <div class="mb-3 col-md-4">
+                    <label>Photo 5:</label>
+                    <input type="file" name="imageFile5" class="form-control" accept="image/*" />
+                    <!-- Display the current image 5 if available -->
+                    <img th:if="${project.imageUrl5}" th:src="${project.imageUrl5}" class="img-fluid mt-2 editpic" alt="Image 5">
+                </div>
+            </div>
+
+
+               <div class="progress mb-2" style="display: none;">
+                   <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+               </div>
+
+
+               <button type="submit" id="updateBtn" class="btn px-5 btn-success mb-3">Update <i class="bi me-3 bi-arrow-right"></i></button>
+           </form>
+       </div>
+       <div class="col-md-2 mt-md-5 ">
+           <a href="javascript:history.back()" class="btn px-5 btn-dark mb-3">
+               <i class="bi me-3 bi-arrow-left"></i> Back
+           </a>
+
+
+       </div>
+
+   </div>
+</div>
+
+
+</body>
+</html>

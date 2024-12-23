@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/home}" >
+
+<body>
+<div layout:fragment="~{content}">
+    <div class="p-0 row mt-5 pt-5">
+        <div class="container-fluid mt-3 col-md-9 mx-auto">
+            <p class="fw-bold text-left p-3">
+                <a th:href="@{/blogs}" class="text-dark">Other articles</a>
+            </p>
+
+            <div class="row blogbody">
+                <div class="p-0">
+                    <div class="p-0 m-3">
+                        <h3 class="pt-3">
+                            Heading 1 is put here. Please Writer Make it short
+                        </h3>
+                        <img src="images/4.jpeg" alt="" class="img-fluid" />
+                        <p class="text-justify pt-3 pb-0 blogtext">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Quibusdam nemo quisquam Lorem, ipsum dolor sit amet consectetur
+                            adipisicing elit. Esse, ducimus. Eos veniam quisquam rem culpa
+                            maxime eum nesciunt id officia consectetur ipsam architecto
+                            aliquid similique natus ut pariatur ratione vitae eaque
+                            adipisci, sequi magnam dolor ipsa in quis! Voluptatibus
+                            corrupti, deserunt quaerat modi veritatis optio fugiat quae,
+                            voluptatum asperiores amet temporibus alias nam adipisci in et
+                            iure perferendis dolore odit esse distinctio repudiandae
+                            mollitia nesciunt quo. Provident magni alias sequi eveniet
+                            tenetur et repudiandae corrupti, totam dolorum natus libero,
+                            tempore dicta. Facilis similique expedita laboriosam cum debitis
+                            repudiandae maiores optio omnis explicabo. Neque doloribus autem
+                            enim libero et nam totam.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  </body>
+</html>

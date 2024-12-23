@@ -1,0 +1,370 @@
+body {
+  font-family: "Barlow", sans-serif !important;
+}
+
+body {
+       overflow-x: hidden; /* Hide the horizontal scrollbar */
+}
+
+.contactimage{
+max-width: 300px;
+margin:auto;
+margin-top:20px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: #ffffff;
+}
+
+/* Your existing styles here */
+
+
+.bodycontent {
+  background-image: url("../images/bg.jpg") !important; /* Replace 'your-image-url.jpg' with the path to your image */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: relative;
+  background-position: center 320px;
+
+}
+
+.fw-bold {
+  font-family: "Barlow", sans-serif !important;
+}
+
+.text-larger input {
+  font-size: 120% !important;
+}
+
+.b-example-divider {
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25) !important;
+}
+.text-white {
+  color: #ffffff !important;
+}
+.topbartext {
+  color: #ffffff !important;
+}
+.searchbg {
+  background-color: rgb(197, 197, 197) !important;
+  font-size: 120% !important;
+}
+.text-small {
+  font-size: 70% !important;
+}
+
+
+.carousel-container table{
+margin:auto !important;
+}
+.categories {
+  border: 2px solid black !important;
+  width: 250px;
+  margin-top: 10px;
+  padding: 10px 50px;
+  font-size: 140%;
+  background-color: #ffffff;
+}
+
+.categoriesadmin {
+  border: 2px solid #000000 !important;
+  margin: 5px;
+  padding: 5px;
+  font-size: 110%;
+  width: 150px !important;
+  background-color: #ffffff;
+}
+
+.categories:hover,
+.categoriesadmin:hover,
+.categoriesadmin:active,
+.categories:active {
+  background-color: #000000;
+  color: #ffffff !important;
+}
+.thumbnail {
+  border: 2px solid #000000;
+}
+
+.thumbnail p {
+  background-color: #ffffff !important;
+  margin: 0 !important;
+  font-weight: 700 !important;
+}
+.editarticlepic {
+max-width:300px;
+}
+
+.custom-thumbnail{
+width:100% !important;
+padding:10px;
+}
+
+#noResults{
+font-weight: bold;
+padding:10px 20px;
+background-color:#ff4d4d;
+color: #ffffff;
+}
+
+.searchresult{
+  border: 2px solid #000000;
+  background-color:#ffffff;
+}
+
+.searchresultouter{
+  margin:auto;
+}
+/* Style for the table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.thumbnail table {
+  font-size: 90% !important;
+}
+
+.thumbnail table tr td {
+  padding: 5px 10px;
+}
+
+/* Alternate row colors */
+tr:nth-child(even) {
+ background-color: #ffffff;
+  color: #000000 !important;
+border-bottom: 1px solid #000000 ;
+
+}
+
+tr:nth-child(odd) {
+  background-color: #000000;
+   color: #ffffff !important;
+   border-bottom: 1px solid #000000 ;
+
+}
+
+tr td{
+border-left: 0.5px solid #000000 ;
+border-right: 0.5px solid #000000 ;
+padding-left: 5px !important;
+}
+
+
+.categorytable table {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 5px 20px;
+}
+.categorytable th {
+  background-color: #000000;
+  color: #ffffff !important;
+  padding: 10px 20px;
+}
+
+.categorytable tr:nth-child(even) {
+  background-color: #ffffff;
+  color: #000000 !important;
+}
+
+.categorytable tr:nth-child(odd) {
+  background-color: #f4f4f4;
+  color: #000000 !important;
+}
+
+.categorytable td {
+  padding: 10px 20px;
+}
+
+.contentdiv {
+  margin-top: 100px !important;
+}
+
+.projectcover {
+  position: relative;
+  width:100%;
+}
+
+.covertable .covertablemain {
+  width: 80% !important;
+  table-layout: fixed;
+}
+.covertable .covertablemain td {
+  width: 33.33% !important;
+}
+
+.btn-content{
+border:1px solid #000000;
+}
+
+.projectcover img {
+
+  width: 800px;
+}
+
+.thumbnail-list img {
+  height: 70px;
+  cursor: pointer;
+  object-fit: cover;
+  width: 124px;
+  border: 0 !important;
+}
+
+.thumbnail-list li {
+  list-style: none;
+  width: 100%;
+}
+
+.details p .chat {
+  background-color: rgb(69, 201, 67);
+  color: #ffffff;
+}
+
+.details p .youtube {
+  background-color: rgb(179, 0, 0);
+  color: #ffffff;
+}
+
+.details  .chat {
+  background-color: rgb(69, 201, 67);
+  color: #ffffff;
+}
+
+.detailcontent {
+  width: 100%;
+  text-align: left !important;
+  border-radius: 0 !important;
+  border-style: ridge !important;
+  font-weight: 700 !important;
+  padding: 5px 10px;
+  margin-right: 2px !important;
+  font-family: "Barlow", sans-serif;
+  font-size: 110%;
+}
+
+.login-container {
+  max-width: 400px;
+  margin: auto;
+  margin-top: 100px;
+}
+
+.blogtext {
+  font-size: 120% !important;
+  text-justify: justify;
+}
+.blogbody img {
+  max-width: 1000px;
+}
+
+.sidenav {
+  padding-top: 100px;
+  background-color: #e7e7e7;
+  height: 70dvh;
+}
+
+.sidenav .nav-item {
+  list-style: none;
+  margin-bottom: 10px;
+  background-color: #c7c7c7;
+}
+.sidenav .nav-item a {
+  padding: 5px;
+}
+
+.selectedsidenav {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.w-10 {
+  width: 10% !important;
+}
+
+footer{
+
+}
+@media screen and (max-width: 800px) {
+
+
+  .contactbar {
+    display: none;
+  }
+  .covertable .covertablemain {
+    width: 100% !important;
+    margin: auto;
+  }
+
+  .covertable .covertablemain td {
+    width: 33.33% !important;
+  }
+
+  table {
+    overflow-x: auto;
+    display: block;
+    border-collapse: collapse;
+  }
+  table tr td {
+    width: 100%;
+  }
+
+  .projectcover table {
+    position: relative;
+  }
+  .contentdiv {
+    margin-top: 100px !important;
+  }
+
+  .projectcover img {
+
+    width: 100%;
+  }
+
+  .thumbnail-list img {
+    height: 70px;
+    cursor: pointer;
+    object-fit: cover;
+    width: 100% !important;
+    border: 0 !important;
+  }
+
+  .login-container {
+    max-width: 400px;
+    margin: 10px !important;
+    margin-top: 100px;
+  }
+}
+
+@media screen and (min-width: 1366px) {
+    .projectcover img {
+        object-fit: cover;
+        width: 800px;
+        height: 100%; /* 16:9 aspect ratio */
+        margin: auto;
+    }
+    .thumbnail-list img {
+      cursor: pointer;
+      object-fit: cover;
+      width: 300px !important;
+      height:130px !important;
+      border: 0 !important;
+    }
+
+}
+
+
+@media screen and (max-width: 1580px) {
+
+    .thumbnail-list img {
+      cursor: pointer;
+      object-fit: cover;
+      width: 200px !important;
+      height:80px !important;
+      border: 0 !important;
+    }
+
+
+
+}

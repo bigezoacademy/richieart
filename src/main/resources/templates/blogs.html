@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/home}" >
+
+
+<body>
+<div layout:fragment="~{content}">
+    <div class="p-0 row mt-5 pt-5">
+        <div class="container-fluid mt-3 col-md-9 mx-auto">
+            <h2 class="fw-bold text-left p-3">Articles <a sec:authorize="isAuthenticated()" th:href="@{/admin}"
+                                                          class=" btn btn-dark btn-sm ms-md-5">
+                <i class="bi bi-arrow-left"></i> Admin Dashboard
+            </a></h2>
+
+            <div class="row">
+                <div th:each="article : ${articles}" class="col-md-3">
+               <div class="p-0 m-3">
+                   <a class="text-dark" th:href="@{/article/{id}(id=${article.id})}">                 <h3 class="pt-3 fw-bold text-dark" th:text="${article.title}">
+
+                        </h3>  </a>
+
+                        <form id="deleteForm" th:action="@{'/deleteArticle/' + ${article.id}}" method="POST" sec:authorize="isAuthenticated()">
+                            <button  type="submit" class="btn text-center btn-sm btn-danger me-3 mb-3">
+                                <i class="bi me-3 bi-trash"></i> Delete
+                            </button>  <a sec:authorize="isAuthenticated()" th:href="@{'/editArticle/' + ${article.id}}"
+                                          class="btn btn-dark btn-sm mb-3">
+                            <i class="bi bi-pencil"></i> Edit
+                        </a>
+
+                        </form>
+
+
+
+                        <img th:src="${article.storyPhotoUrl}" alt="" class="img-fluid" />
+                        <p class="text-justify pt-3 pb-0" th:text="${article.promptText}"></p>
+                        <p class="pb-3">
+                            <a class="w-100 fw-normal btn btn-dark rounded-0 text-larger" th:href="@{/article/{id}(id=${article.id})}">
+                                Read more ...
+
+                            </a>
+
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+  </body>
+</html>

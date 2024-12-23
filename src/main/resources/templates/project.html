@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/home}" >
+
+<body>
+<div layout:fragment="~{content}">
+    <div class="pt-5 row mt-5">
+        <div class="col-md-2"></div>
+
+        <div th:object="${project}" class="col-md-8 pt-5">
+            <div class="margin:10px;">
+                <h4 class="text-left fw-bold  ps-md-5 ps-sm-3 pb-0" >
+                    <span class="fw-normal">PROJECT: </span>
+                    <span th:text="${project.projectCode}"></span>
+                </h4>
+                <h4 class="text-left pt-0 mt-0 fw-bold ps-md-5 ps-sm-3 pb-3 text-secondary" >
+              <span >CATEGORY: </span>      <span th:text="${#strings.toUpperCase(project.category) + ' - '}" class="fw-normal"></span>      <span th:text="${project.numberOfBedrooms} + ' BEDROOMS'" class="fw-normal"></span>
+                </h4>
+            </div>
+            <div class="row">
+                <div class="col-md-9 ">
+                    <div class="carousel-container position-relative ">
+                        <div
+                                id="carouselExample"
+                                class="carousel slide projectcover"
+                                data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item image-1 active" th:if="${!project.imageUrl1.isEmpty}">
+                                    <img
+                                            th:src="${project.imageUrl1}"
+                                            alt=""
+                                            class="img-fluid w-100"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#fullScreenModal"
+                                            onclick="updateFullScreenImage('${project.imageUrl1}')" />
+                                </div>
+
+                                <div class="carousel-item image-2" th:if="${!project.imageUrl2.isEmpty}">
+                                    <img
+                                            th:src="${project.imageUrl2}"
+                                            alt=""
+                                            class="img-fluid w-100"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#fullScreenModal" />
+                                </div>
+                                <div class="carousel-item image-3" th:if="${!project.imageUrl3.isEmpty}">
+                                    <img
+                                            th:src="${project.imageUrl3}"
+                                            alt=""
+                                            class="img-fluid w-100"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#fullScreenModal" />
+                                </div>
+                                <div class="carousel-item image-4" th:if="${!project.imageUrl4.isEmpty}">
+                                    <img
+                                            th:src="${project.imageUrl4}"
+                                            alt=""
+                                            class="img-fluid w-100"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#fullScreenModal" />
+                                </div>
+                                <div class="carousel-item image-5" th:if="${!project.imageUrl5.isEmpty}">
+                                    <img
+                                            th:src="${project.imageUrl5}"
+                                            alt=""
+                                            class="img-fluid w-100"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#fullScreenModal" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="" th:if="${project.imageUrl1.isEmpty}">
+                            <p class="alert alert-danger my-5">
+                       <i class="bi bi-image"> </i>         Sorry,    No photos here yet
+                            </p>
+                        </div>
+                        <div class="covertable bottom-n10 translate-middle-y" style="margin:auto !important;">
+                            <table class="m-0 mx-auto w-100 covertablemain text-center" style="margin:auto !important;">
+                                <tr>
+                                    <td th:text="${project.numberOfFloors} + ' Floor'" style="text-align:right !important" class="p-1"></td>
+                                    <td th:text="${project.numberOfBedrooms} + ' Bedrooms'" style="text-align:center !important" class="p-1"></td>
+                                    <td th:text="${project.numberOfBathrooms} + ' Bathrooms'" style="text-align:left !important" class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td th:text="${project.areaOfHouse} + 'sq.m -Area'" style="text-align:right !important" class="p-1"></td>
+                                    <td th:text="${project.widthOfHouse} + 'm -Wide'" style="text-align:center !important" class="p-1"></td>
+                                    <td th:text="${project.depthOfHouse} + 'm -Deep'" style="text-align:left !important" class="p-1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mx-auto text-center">
+                    <ul class="thumbnail-list d-flex flex-lg-column flex-md-row justify-content-around align-items-center mx-auto">
+                        <!-- Check if imageUrl1 is available -->
+                        <li
+                                th:if="${!project.imageUrl1.isEmpty}"
+                                data-bs-target="#carouselExample"
+                                data-bs-slide-to="0"
+                                class="mb-3">
+                            <img
+                                    th:src="${project.imageUrl1}"
+                                    alt=""
+                                    class="img-fluid thumbnail"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#fullScreenModal"
+                                    onclick="updateFullScreenImage('${project.imageUrl1}')" />
+                        </li>
+
+                        <!-- Check if imageUrl2 is available -->
+                        <li
+                                th:if="${!project.imageUrl2.isEmpty}"
+                                data-bs-target="#carouselExample"
+                                data-bs-slide-to="1"
+                                class="mb-3">
+                            <img
+                                    th:src="${project.imageUrl2}"
+                                    alt=""
+                                    class="img-fluid thumbnail"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#fullScreenModal"
+                                    onclick="updateFullScreenImage('${project.imageUrl2}')" />
+                        </li>
+
+                        <!-- Check if imageUrl3 is available -->
+                        <li
+                                th:if="${!project.imageUrl3.isEmpty}"
+                                data-bs-target="#carouselExample"
+                                data-bs-slide-to="2"
+                                class="mb-3">
+                            <img
+                                    th:src="${project.imageUrl3}"
+                                    alt=""
+                                    class="img-fluid thumbnail"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#fullScreenModal"
+                                    onclick="updateFullScreenImage('${project.imageUrl3}')" />
+                        </li>
+
+                        <!-- Check if imageUrl4 is available -->
+                        <li
+                                th:if="${!project.imageUrl4.isEmpty}"
+                                data-bs-target="#carouselExample"
+                                data-bs-slide-to="3"
+                                class="mb-3">
+                            <img
+                                    th:src="${project.imageUrl4}"
+                                    alt=""
+                                    class="img-fluid thumbnail"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#fullScreenModal"
+                                    onclick="updateFullScreenImage('${project.imageUrl4}')" />
+                        </li>
+
+                        <!-- Check if imageUrl5 is available -->
+                        <li
+                                th:if="${!project.imageUrl5.isEmpty}"
+                                data-bs-target="#carouselExample"
+                                data-bs-slide-to="4"
+                                class="mb-3">
+                            <img
+                                    th:src="${project.imageUrl5}"
+                                    alt=""
+                                    class="img-fluid thumbnail"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#fullScreenModal"
+                                    onclick="updateFullScreenImage('${project.imageUrl5}')" />
+                        </li>
+                        <!-- Add more thumbnails as needed -->
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-9 p-0 m-0">
+                    <!----------------    PROJECT  DETAILS        -------------->
+                    <div class="container-fluid details">
+                        <p class="my-1 ps-5">
+
+                            <a class="btn rounded-0 chat" th:href="@{'https://wa.me/+256776407600?text=Hello Richieart, am interested in the project with code: ' + ${project.projectCode}}">
+                                <i class="bi bi-whatsapp"></i> Click To Chat
+                            </a>
+
+                            <a class="ms-3 btn rounded-0 youtube" th:href="@{${project.projectVideoUrl}}">
+                                <i class="bi bi-youtube"></i> Watch Video
+                            </a>
+
+
+
+
+                        </p>
+
+                        <div class="container-fluid m-0 mt-5">
+                            <div class="row m-0 p-0">
+                                <div class="col-md-12 m-0">
+                                    <div
+                                            class="btn-group w-100"
+                                            role="group"
+                                            aria-label="Basic example">
+                                        <button
+                                                type="button " id="descriptionbtn"
+                                                class="btn btn-content  rounded-0 me-md-3  border-3 fw-bold"
+                                                onclick="showdescription()" style="background-color:#000000; color:#ffffff;">
+                                            Description
+                                        </button>
+                                        <button
+                                                type="button" id="costbtn"
+                                                class="btn btn-content   border-3 fw-bold"
+                                                onclick="costestimates()"  >
+                                            Cost Estimates
+                                        </button>
+                                        <button
+                                                type="button"
+                                                class="btn btn-content  ms-md-3  border-3 fw-bold"
+                                                onclick="showreviews()" style="display:none" >
+                                            Reviews
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 m-0">
+                                    <div id="projectdescription">
+                                        <p class="p-3" th:text="${project.description}">
+
+                                        </p>
+                                    </div>
+                                    <div id="projectcostestimates" style="display:none" >
+                                        <p class="p-3" th:text="${project.materialSchedule}">
+
+                                        </p>
+                                    </div>
+                                    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                                    <script th:inline="javascript">
+                                        function costestimates() {
+                                            $('#projectdescription').hide();
+                                            $('#projectcostestimates').show();
+                                             $('#costbtn').css({
+            'background-color': 'black',
+            'color': 'white'
+        });
+        $('#descriptionbtn').css({
+          'background-color': 'white',
+            'color': 'black'
+        });
+                                        }
+                                          function showdescription() {
+                                            $('#projectdescription').show();
+                                            $('#projectcostestimates').hide();
+                                                               $('#costbtn').css({
+            'background-color': 'white',
+            'color': 'black'
+        });
+        $('#descriptionbtn').css({
+          'background-color': 'black',
+            'color': 'white'
+        });
+                                        }
+                                    </script>
+
+                                    <div id="projectreviews" style="display:none">
+                                        <p class="p-3">
+                                            No Reviews yet
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <!--------------------  END PROJECT DETAILS    --------------->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+
+                <p class="pt-5 mt-5 p-3 text-center mx-auto">
+                    <a href="javascript:history.back()" class="btn btn-dark  w-100  mb-3"><i class="bi bi-arrow-left"></i> Back</a>
+                </p>
+
+            <p class="pt-5 mt-5 text-center mx-auto" sec:authorize="isAuthenticated()">   <a th:href="@{'/editProject/' + ${project.id}}" class="btn btn-secondary w-100 mb-3">
+    <i class="bi me-3 bi-pencil"></i>Edit
+</a></p>
+            <p class="text-center mx-auto">
+            <form id="deleteForm" th:action="@{'/deleteProject/' + ${project.id}}" method="POST" sec:authorize="isAuthenticated()">
+                <button type="submit" class="btn text-center w-100 btn-danger mb-3">
+                    <i class="bi me-3 bi-trash"></i> Delete
+                </button>
+            </form>
+            </p>
+        </div>
+    </div>
+    <!-- Add this script block in your HTML -->
+
+    <script th:src="@{js/script.js}"></script>
+</div>
+
+</body>
+</html>

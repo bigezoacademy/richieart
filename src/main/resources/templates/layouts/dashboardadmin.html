@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Richieart.co</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Richieart Company</title>
+        <link rel="icon" th:href="@{images/logo.png}" type="image/x-icon" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+                href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&display=swap"
+                rel="stylesheet" />
+        <link
+                href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+                rel="stylesheet"
+                integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+                crossorigin="anonymous" />
+
+        <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
+
+        <link th:href="@{/css/style.css}" rel="stylesheet"/>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+        <script th:src="@{js/script.js}"></script>
+        <script src="https://kit.fontawesome.com/1d323db663.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <style>
+            /* Your existing CSS styles here */
+
+    /* Style for the preloader container */
+    .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999; /* Ensure it's above other content */
+    }
+
+
+
+
+
+        </style>
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-5N6N5PST2L"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-5N6N5PST2L');
+        </script>
+    </head>
+</head>
+<body>
+<div id="preloader" class="preloader">
+    <div class="loader-container mx-auto text-center">
+        <img th:src="@{images/logo2.png}" alt="Loading..." class="loader w-50 mx-auto">
+        <p class="text-right py-5">Loading... please wait</p>
+    </div>
+</div>
+<div  id="content" class="content">
+    <div th:insert="~{fragments/navlogout::nav}"></div>
+    <div  layout:fragment="~{content}">
+    </div>
+    <div th:insert="~{fragments/footer::footer}"></div>
+</div>
+
+<script>
+    window.addEventListener("load", function () {
+        document.getElementById("preloader").style.display = "none";
+        document.getElementById("content").style.display = "block";
+    });
+</script>
+
+<!-- Include Bootstrap JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+<script>
+    // JavaScript to open the modal when a carousel-item is clicked
+    document.addEventListener("DOMContentLoaded", function () {
+      const carouselItems = document.querySelectorAll(".carousel-item");
+
+      carouselItems.forEach((item, index) => {
+        item.addEventListener("click", function () {
+          document.getElementById("fullScreenImage").src =
+            this.querySelector("img").src;
+          document
+            .getElementById("fullScreenModal")
+            .setAttribute("data-bs-target", "#carouselExample");
+          document.getElementById("fullScreenModal").classList.add("show");
+          document.getElementById("fullScreenModal").style.display = "block";
+        });
+      });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+    function changeOption(clickedOption) {
+      // Remove 'selectedsidenav' class from all sidenav options
+      const sidenavOptions = document.querySelectorAll(".sidenavoption");
+      sidenavOptions.forEach((option) => {
+        option.classList.remove("selectedsidenav");
+      });
+
+      // Add 'selectedsidenav' class to the clicked sidenav option
+      clickedOption.classList.add("selectedsidenav");
+
+      // Hide all content divs
+      const contentDivs = document.querySelectorAll(".adminoption");
+      contentDivs.forEach((div) => {
+        div.style.display = "none";
+      });
+
+      // Display the corresponding content div
+      const targetContentId = clickedOption.dataset.targetContent;
+      const selectedContentDiv = document.getElementById(targetContentId);
+      selectedContentDiv.style.display = "block";
+    }
+</script>
+
+
+<script>
+    function confirmDelete() {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover this category!',
+        icon: 'warning',
+        showCancelButton: true,
+        buttonsStyling: false, // Disable default button styling
+        customClass: {
+          confirmButton: 'btn btn-danger mx-3',
+          cancelButton: 'btn btn-dark',
+        },
+
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Add logic to handle delete here
+          Swal.fire('Deleted!', 'The category has been deleted.', 'success');
+        }
+      });
+    }
+
+
+      function editCategory(categoryName) {
+      Swal.fire({
+        title: 'Edit Category',
+        input: 'text',
+        inputValue: categoryName,
+        showCancelButton: true,
+        buttonsStyling: false, // Disable default button styling
+        customClass: {
+
+          cancelButton: 'btn btn-dark mx-3',
+          confirmButton: 'btn btn-success '
+        },
+        confirmButtonText: 'Submit',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const newCategoryName = result.value;
+          // Add logic to handle edit here with newCategoryName
+          Swal.fire('Updated!', `Category has been updated to ${newCategoryName}`, 'success');
+        }
+      });
+    }
+
+</script>
+
+</body>
+</html>

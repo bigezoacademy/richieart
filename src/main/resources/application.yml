@@ -1,0 +1,51 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  error:
+    whitelabel:
+      enabled: false
+
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  datasource:
+    url: jdbc:mysql://localhost:3306/richiear_database
+    username: root
+    password: fire
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: bigezocrm@gmail.com
+    password: yadfiqyxfzndplgw
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+cloud:
+  aws:
+    credentials:
+      access-key: 0053b1621543bb80000000001
+      secret-key: K0051aCVhwd4OwwiddjcFr4nzDG0JfI
+    region:
+      static: us-east-005
+    endpoint:
+      static: https://s3.us-east-005.backblazeb2.com
+    auto: false
+
+
+application:
+  bucket:
+    name: richieart

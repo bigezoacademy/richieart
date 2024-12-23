@@ -1,0 +1,87 @@
+<div th:fragment="userdashboardnav">
+    <!-- Sidebar -->
+    <ul class="navbar-nav  sidebar sidebar-user bg-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center"
+           th:href="@{/}">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">ARBITRAGE USER
+            </div>
+
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+               <li class="nav-item text-center p-2">
+            <a class="btn btn-danger"  th:href="@{/sellbusiness}">
+                <i class="fas fa-fw fa-plus"></i>
+                <span>Sell a business</span></a>
+        </li>
+
+        <li class="nav-item p-2">
+            <a class="nav-link"  th:href="@{/mybusinesses}">
+                <i class="fas fa-fw fa-list"></i>
+                <span>My submitted businesses</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <!-- Heading -->
+        <div class="sidebar-heading text-warning">
+            BUY BUSINESS
+        </div>
+
+        <li class="nav-item p-2">
+            <a class="nav-link"  th:href="@{/buybusiness}">
+                <i class="fas fa-fw fa-list"></i>
+                <span>All Listed Businesses</span></a>
+        </li>
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{useranalytics}">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Analytics</span></a>
+        </li>
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading text-warning">
+            FINANCE
+        </div>
+
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item p-2">
+            <a class="nav-link"  th:href="@{/usertransactions}">
+                <i class="fas fa-fw fa-dollar"></i>
+                <span>My Transactions</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+
+        <li class="nav-item p-2">
+            <a class="nav-link"  th:href="@{/user}">
+                <i class="fas fa-fw fa-home"></i>
+                <span>Dashboard</span></a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+</div>

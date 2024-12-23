@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/home}" >
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+<div layout:fragment="~{content}">
+    <div class="bodycontent m-0" >
+        <div>
+            <div class="m-0 pt-5 mt-5">
+                <p class="pt-5 text-center">Welcome to richieart.co</p>
+                <p sec:authorize="isAuthenticated()" class="py-1 text-center">
+                    <a  th:href="@{/admin}"
+                        class=" btn btn-dark btn-sm ">
+                        <i class="bi bi-arrow-left"></i> Admin Dashboard
+                    </a>
+                </p>
+
+                <h2 class="text-center display-1 py-0 my-0">ULTIMATE</h2>
+                <p class="py-1 text-center h5">Design Solutions</p>
+                <p class="py-1 text-center p">
+                    Welcome to our portfolio; kindly review our terms and conditions.
+                </p>
+
+            </div>
+
+            <div class="col-md-4 mx-auto">
+                <!-- Add the th:action attribute to specify the search endpoint -->
+                <div class="m-3">
+                    <form class="mx-auto text-center" id="searchForm" th:action="@{/search}" method="get">
+                        <input
+                                type="search" id="query"
+                                class="form-control text-center border-3 searchbg mx-auto w-100 rounded rounded-5 border-dark"
+                                placeholder="Search "
+                                name="searchTerm"
+                        />
+                    </form>
+                </div>
+            </div>
+
+            <div class="container-fluid row">
+                <div id="searchResultsContainer" class="p-0 "></div>
+                <p id="noResults" class="text-center mt-3" style="display:none;">No results. Search for a project code or category e.g. single bedroom</p>
+
+                <script th:inline="javascript">
+                    // Attach an event listener to the input field
+                    $('#query').on('input', function() {
+                        // Get the search term
+                        var searchTerm = $('#query').val();
+
+                        // Check if the search term is empty
+                        if (!searchTerm.trim()) {
+                            // Clear previous search results and hide the "No results" message
+                            $('#searchResultsContainer').empty();
+                            $('#noResults').hide();
+                            return;
+                        }
+
+                        // Call the searchProjects function with the non-empty search term
+                        searchProjects();
+                    });
+
+                    function searchProjects() {
+                        var searchTerm = $('#query').val();
+
+                        $.ajax({
+                            type: 'GET',
+                            url: '/search',
+                            data: { searchTerm: searchTerm },
+                            success: function (data) {
+                                console.log(data);  // Log the data to the console
+
+                                // Clear previous search results and hide the "No results" message
+                                $('#searchResultsContainer').empty();
+                                $('#noResults').hide();
+
+                                // Check if data is an array
+                                if (Array.isArray(data) && data.length > 0) {
+                                    // Create a single container to hold all results
+                                    var resultsContainer = '<div class="col-md-12 row">';
+
+                                    // Iterate over the received data and append each result to the container
+                                    data.forEach(function (project) {
+                                        var resultHtml = '<div class="col-md-2 searchresultouter">';
+                                        resultHtml += '<div class="m-1 searchresult">';
+                                        resultHtml += '<a class="btn" onclick="redirectToProject(' + project.id + ')">';
+                                        resultHtml += '<img class="img-fluid" src="' + project.thumbnailImage + '" alt="Thumbnail">';
+                                        resultHtml += '<span>' + project.category + ' </span>';
+                                        resultHtml += '<p class="fw-bold"><span>' + project.projectCode + ' </span></p></a>';
+                                        resultHtml += '</div>';
+                                        resultHtml += '</div>';
+
+                                        // Append each result to the container
+                                        resultsContainer += resultHtml;
+                                    });
+
+                                    // Close the container div
+                                    resultsContainer += '</div>';
+
+                                    // Append the entire result set to the container
+                                    $('#searchResultsContainer').append(resultsContainer);
+                                } else {
+                                    // Display "No results" message
+                                    $('#noResults').show();
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Error during the AJAX request. Status: ' + status + ', Error: ' + error);
+                            }
+                        });
+                    }
+
+                    function redirectToProject(projectId) {
+                        window.location.href = '/project/' + projectId;
+                    }
+                </script>
+            </div>
+        </div>
+
+        <div class="p-0 row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 mx-auto text-center">
+                <div class="p-0 row text-center">
+                    <div class="col-md-6 " th:each="entry : ${bedroomsByCategory}">
+                        <h2 class="fw-bold text-center mt-5" th:text="${entry.key}"></h2>
+                        <p class="py-2 m-3 text-center" th:each="bedroom : ${entry.value}">
+                            <a class="categories btn rounded-0" th:href="@{'/projects/' + ${entry.key} + '/' + ${bedroom}}" th:text="${bedroom+ ' BEDROOMS'}"></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/dashboardadmin}" >
+
+<body>
+<div layout:fragment="~{content}">
+
+
+
+<h1 class="display-1"></h1>
+<div class="pb-md-5 m-sm-3 text-left">
+    <table class="table profiletable">
+        <tr class="text-left">
+            <td class="text-left"><i class="fas fa-user text-primary me-2"></i></td>
+            <td class="text-left"><span class="text-dark" th:text="${firstName}"></span></td>
+        </tr>
+        <tr>
+            <td class="text-left"><i class="fas fa-user text-primary me-2"></i></td>
+            <td class="text-left"><span class="text-dark" th:text="${lastName}"></span></td>
+        </tr>
+        <tr>
+            <td class="text-left"><i class="fas fa-envelope text-primary me-2"></i></td>
+            <td class="text-left"><span class="text-dark" th:text="${email}"></span></td>
+        </tr>
+        <tr>
+            <td class="text-left"><i class="fas fa-phone text-primary me-2"></i></td>
+            <td class="text-left"><span class="text-dark" th:text="${phone}"></span></td>
+        </tr>
+    </table>
+</div>
+
+
+</div>
+</body>
+</html>

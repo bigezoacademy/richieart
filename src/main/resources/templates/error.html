@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/home}" >
+
+<body>
+<div layout:fragment="~{content}">
+    <p class="py-3">---</p>
+    <h1 class="text-center text-danger fw-bold pt-5 mt-5">ERROR</h1>
+    <h1 class="text-danger text-center">
+        <i class="fa-solid fa-triangle-exclamation display-1"></i>
+    </h1>
+
+
+    <div class="row mt-2">
+            <div th:if="${param.invalid}" class="col-sm-8">
+                <p class="alert alert-danger">Invalid verification token</p>
+            </div>
+
+            <div th:if="${param.expired}" class="col-sm-8">
+                <p class="alert alert-info">This verification link has already expired.</p>
+            </div>
+        </div>
+    <p class="text-center py-5">
+        <a href="#" th:href="@{/}" class="btn btn-lg btn-dark"> Go to home page</a>
+    </p>
+
+</div>
+
+</body>
+</html>

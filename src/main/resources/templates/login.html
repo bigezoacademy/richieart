@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/home}" >
+
+<body>
+<div layout:fragment="~{content}">
+
+
+    <div class="p-0 row mt-5 pt-5">
+        <div class="row mt-4 ">
+            <div th:if="${param.error}" class="col-sm-8 mx-auto">
+                <p class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation text-danger"></i> Invalid email or password</p>
+            </div>
+
+            <div th:if="${param.reset_success}" class="col-sm-8 mx-auto">
+                <p class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                    You have successfully reset your password, please log in here.</p>
+            </div>
+
+            <div th:if="${param.verified}" class="col-sm-8 mx-auto">
+                <p class="alert alert-info alert-dismissible fade show text-center" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation text-danger"></i> This account has already been verified,  please log in here.</p>
+            </div>
+            <div th:if="${param.valid}" class="col-sm-8 mx-auto">
+                <p class="alert alert-success alert-dismissible text-center">
+                    <i class=" text-success fa-solid fa-circle-check"></i> Email verified successfully, please log in here.</p>
+            </div>
+
+            <!-- show logout warning alert when logged out. -->
+            <div th:if="${param.logout}" class="col-sm-8 mx-auto">
+                <p class="alert alert-warning text-center">You have been logged out.</p>
+            </div>
+        </div>
+        <div class="container-fluid mt-3  mx-auto">
+            <p class="mx-auto text-center">
+                <img th:src="@{images/logo.png}" alt="" class="w-10" />
+            </p>
+            <h2 class="text-center pt-3 fw-bold">Login</h2>
+            <div class="row container-fluid">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <form th:action="@{/login}" method="post" class="mx-auto">
+
+                        <div class="mb-3 row mx-auto">
+                            <div class="input p-0 m-0">
+                                <input
+                                        type="text"
+                                        class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                        id="email"
+                                        name="email"
+                                        required
+                                        autofocus="autofocus"
+                                        placeholder="Email" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row mx-auto">
+                            <div class="input p-0 m-0">
+                                <input
+                                        type="password"
+                                        class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"
+                                        name="password"
+                                        id="password"
+                                        required
+                                        autofocus="autofocus"
+                                        placeholder="Password" />
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <button
+                                    type="submit"
+                                    name="login"
+                                    id="login"
+                                    class="btn btn-lg btn-dark border-0 w-100 mb-5">
+                                <i class="fa-solid fa-right-to-bracket"></i> Login
+                            </button>
+                            <hr />
+                            <span>
+                Not registered yet?
+                <a href="#" th:href="@{/registration/registration-form}"
+                >Register.</a
+                >
+              </span>
+                            <div class="vr"></div>
+                            <span
+                            ><a href="/" th:href="@{registration/forgot-password-request}"
+                            >Forgot password.</a
+                            >
+              </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

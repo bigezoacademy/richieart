@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Richieart.co</title>
+    <link rel="icon" th:href="@{images/logo.png}" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script th:src="@{js/script.js}"></script>
+    <script src="https://kit.fontawesome.com/1d323db663.js" crossorigin="anonymous"></script>
+    <style>
+        /* Ensure the body and html elements take up the full height */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Use flexbox on the content container to push footer to the bottom */
+        .content {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Make sure the main content grows and takes up available space */
+        .homebody {
+            flex-grow: 1;
+        }
+
+        /* Style for the preloader container */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Ensure it's above other content */
+        }
+    </style>
+</head>
+<body>
+<div id="preloader" class="preloader">
+    <div class="loader-container mx-auto text-center">
+        <img th:src="@{../images/logo2.png}" alt="Loading..." class="loader w-50 mx-auto">
+        <p class="text-right py-5">Loading... please wait</p>
+    </div>
+</div>
+<div id="content" class="content m-0">
+    <div th:insert="~{fragments/nav::nav}"></div>
+    <div layout:fragment="~{content}" class="homebody">
+        <!-- Your content here -->
+    </div>
+    <div th:insert="~{fragments/footer::footer}"></div>
+</div>
+
+<script>
+    window.addEventListener("load", function () {
+        document.getElementById("preloader").style.display = "none";
+        document.getElementById("content").style.display = "block";
+    });
+</script>
+
+</body>
+</html>

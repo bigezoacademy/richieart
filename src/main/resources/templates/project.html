@@ -15,7 +15,7 @@
                     <span th:text="${project.projectCode}"></span>
                 </h4>
                 <h4 class="text-left pt-0 mt-0 fw-bold ps-md-5 ps-sm-3 pb-3 text-secondary" >
-              <span >CATEGORY: </span>      <span th:text="${#strings.toUpperCase(project.category) + ' - '}" class="fw-normal"></span>      <span th:text="${project.numberOfBedrooms} + ' BEDROOMS'" class="fw-normal"></span>
+              <span >CATEGORY: </span>      <span th:text="${#strings.toUpperCase(project.category) + ' - '}" class="fw-normal"></span>      <span th:text="${#strings.toUpperCase(project.category) == 'APARTMENTS'} ? ${project.numberOfBedrooms} : ${project.numberOfBedrooms + ' BEDROOMS'}" class="fw-normal"></span>
                 </h4>
             </div>
             <div class="row">
@@ -77,16 +77,21 @@
                             </p>
                         </div>
                         <div class="covertable bottom-n10 translate-middle-y" style="margin:auto !important;">
-                            <table class="m-0 mx-auto w-100 covertablemain text-center" style="margin:auto !important;">
-                                <tr>
-                                    <td th:text="${project.numberOfFloors} + ' Floor'" style="text-align:right !important" class="p-1"></td>
-                                    <td th:text="${project.numberOfBedrooms} + ' Bedrooms'" style="text-align:center !important" class="p-1"></td>
-                                    <td th:text="${project.numberOfBathrooms} + ' Bathrooms'" style="text-align:left !important" class="p-1"></td>
-                                </tr>
-                                <tr>
-                                    <td th:text="${project.areaOfHouse} + 'sq.m -Area'" style="text-align:right !important" class="p-1"></td>
-                                    <td th:text="${project.widthOfHouse} + 'm -Wide'" style="text-align:center !important" class="p-1"></td>
-                                    <td th:text="${project.depthOfHouse} + 'm -Deep'" style="text-align:left !important" class="p-1"></td>
+                            <table class="m-0 mx-auto w-100 covertablemain text-center" style="margin:auto !important;" th:if="${project.getDisplaySpecs().size() > 0}">
+                                <tr th:each="rowIdx : ${project.getDisplaySpecs().size() > 0 ? #numbers.sequence(0, (project.getDisplaySpecs().size() - 1) / 3) : {}}">
+                                    <td th:if="${rowIdx * 3 < project.getDisplaySpecs().size()}" 
+                                        th:text="${project.getDisplaySpecs().get(rowIdx * 3)}" 
+                                        style="text-align:right !important" class="p-1"></td>
+                                    <td th:if="${rowIdx * 3 + 1 < project.getDisplaySpecs().size()}" 
+                                        th:text="${project.getDisplaySpecs().get(rowIdx * 3 + 1)}" 
+                                        style="text-align:center !important" class="p-1"></td>
+                                    <td th:if="${rowIdx * 3 + 2 < project.getDisplaySpecs().size()}" 
+                                        th:text="${project.getDisplaySpecs().get(rowIdx * 3 + 2)}" 
+                                        style="text-align:left !important" class="p-1"></td>
+                                    
+                                    <!-- Fallback empty cells to preserve 3-column layout styling -->
+                                    <td th:if="${rowIdx * 3 + 1 >= project.getDisplaySpecs().size()}" style="width:33.3% !important" class="p-1"></td>
+                                    <td th:if="${rowIdx * 3 + 2 >= project.getDisplaySpecs().size()}" style="width:33.3% !important" class="p-1"></td>
                                 </tr>
                             </table>
                         </div>

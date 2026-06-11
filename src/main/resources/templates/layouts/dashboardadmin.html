@@ -69,8 +69,10 @@
 <body>
 <div id="preloader" class="preloader">
     <div class="loader-container mx-auto text-center">
-        <img th:src="@{images/logo2.png}" alt="Loading..." class="loader w-50 mx-auto">
-        <p class="text-right py-5">Loading... please wait</p>
+        <div class="spinner-border text-dark mb-3" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="py-2">Loading... please wait</p>
     </div>
 </div>
 <div  id="content" class="content">

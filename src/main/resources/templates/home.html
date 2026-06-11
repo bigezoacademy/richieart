@@ -6,6 +6,10 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
+<div layout:fragment="preloaderContent" class="loader-container mx-auto text-center">
+    <img th:src="@{/images/logo2.png}" alt="Loading..." class="loader w-50 mx-auto">
+    <p class="text-right py-5">Loading... please wait</p>
+</div>
 <div layout:fragment="~{content}">
     <div class="bodycontent m-0" >
         <div>
@@ -123,10 +127,10 @@
             <div class="col-md-2"></div>
             <div class="col-md-8 mx-auto text-center">
                 <div class="p-0 row text-center">
-                    <div class="col-md-6 " th:each="entry : ${bedroomsByCategory}">
-                        <h2 class="fw-bold text-center mt-5" th:text="${entry.key}"></h2>
+                    <div class="col-md-4" th:each="entry : ${bedroomsByCategory}">
+                        <h2 class="fw-bold text-center mt-5" th:text="${#strings.toUpperCase(entry.key)}"></h2>
                         <p class="py-2 m-3 text-center" th:each="bedroom : ${entry.value}">
-                            <a class="categories btn rounded-0" th:href="@{'/projects/' + ${entry.key} + '/' + ${bedroom}}" th:text="${bedroom+ ' BEDROOMS'}"></a>
+                            <a class="categories btn rounded-0" th:href="@{'/projects/' + ${entry.key} + '/' + ${bedroom}}" th:text="${#strings.toUpperCase(entry.key) == 'APARTMENTS'} ? ${bedroom} : ${bedroom + ' BEDROOMS'}"></a>
                         </p>
                     </div>
                 </div>

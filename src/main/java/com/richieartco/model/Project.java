@@ -1,6 +1,8 @@
 package com.richieartco.model;
 
 import jakarta.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 public class Project {
@@ -50,6 +52,8 @@ public class Project {
     private String widthOfHouse;
     private String depthOfHouse;
     private String verified;
+    private String unitsPerFloor;
+    private String plotSize;
 
     // Default constructor
     public Project() {
@@ -242,5 +246,72 @@ public class Project {
 
     public void setVerified(String verified) {
         this.verified = verified;
+    }
+
+    public String getUnitsPerFloor() {
+        return unitsPerFloor;
+    }
+
+    public void setUnitsPerFloor(String unitsPerFloor) {
+        this.unitsPerFloor = unitsPerFloor;
+    }
+
+    public String getPlotSize() {
+        return plotSize;
+    }
+
+    public void setPlotSize(String plotSize) {
+        this.plotSize = plotSize;
+    }
+
+    public List<String> getDisplaySpecs() {
+        List<String> specs = new ArrayList<>();
+        
+        // Floors
+        if (numberOfFloors != null && !numberOfFloors.trim().isEmpty()) {
+            try {
+                int floors = Integer.parseInt(numberOfFloors.trim());
+                specs.add(floors + " Floor" + (floors > 1 ? "s" : ""));
+            } catch (NumberFormatException e) {
+                specs.add(numberOfFloors + " Floor");
+            }
+        }
+
+        if ("APARTMENTS".equalsIgnoreCase(category)) {
+            // Apartment sub-category
+            if (numberOfBedrooms != null && !numberOfBedrooms.trim().isEmpty()) {
+                specs.add(numberOfBedrooms);
+            }
+            // Units per floor
+            if (unitsPerFloor != null && !unitsPerFloor.trim().isEmpty()) {
+                specs.add(unitsPerFloor + " Units/Floor");
+            }
+            // Area per floor
+            if (areaOfHouse != null && !areaOfHouse.trim().isEmpty()) {
+                specs.add(areaOfHouse + " sq.m - Area/Floor");
+            }
+            // Plot Size
+            if (plotSize != null && !plotSize.trim().isEmpty()) {
+                specs.add(plotSize);
+            }
+        } else {
+            // House specs
+            if (numberOfBedrooms != null && !numberOfBedrooms.trim().isEmpty()) {
+                specs.add(numberOfBedrooms + " Bedrooms");
+            }
+            if (numberOfBathrooms != null && !numberOfBathrooms.trim().isEmpty()) {
+                specs.add(numberOfBathrooms + " Bathrooms");
+            }
+            if (areaOfHouse != null && !areaOfHouse.trim().isEmpty()) {
+                specs.add(areaOfHouse + " sq.m - Area");
+            }
+            if (widthOfHouse != null && !widthOfHouse.trim().isEmpty()) {
+                specs.add(widthOfHouse + "m - Wide");
+            }
+            if (depthOfHouse != null && !depthOfHouse.trim().isEmpty()) {
+                specs.add(depthOfHouse + "m - Deep");
+            }
+        }
+        return specs;
     }
 }

@@ -23,53 +23,64 @@
                    <input type="text" name="projectVideoUrl" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.projectVideoUrl}" required />
                </div>
 
-               <div class="mb-3">
-                   <label>Category:</label>
-                   <select name="category" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.category}" >
-                       <option>SINGLE FLOOR</option>
-                       <option>STORIED HOUSES</option>
-                   </select>
+                <div class="mb-3">
+                    <label>Category:</label>
+                    <select name="category" id="editCategorySelect" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.category}" onchange="toggleEditApartmentFields()">
+                        <option th:selected="${project.category == 'SINGLE FLOOR'}">SINGLE FLOOR</option>
+                        <option th:selected="${project.category == 'STORIED HOUSES'}">STORIED HOUSES</option>
+                        <option th:selected="${project.category == 'APARTMENTS'}">APARTMENTS</option>
+                    </select>
+                </div>
+
+                <div class="mb-3" id="editUnitsPerFloorContainer" th:style="${project.category == 'APARTMENTS' ? 'display: block;' : 'display: none;'}">
+                    <label>Units per Floor:</label>
+                    <input type="text" name="unitsPerFloor" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.unitsPerFloor}" />
+                </div>
+
+                <div class="mb-3" id="editPlotSizeContainer" th:style="${project.category == 'APARTMENTS' ? 'display: block;' : 'display: none;'}">
+                    <label>Plot Size & Style:</label>
+                    <input type="text" name="plotSize" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.plotSize}" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Project Description:</label>
+                    <textarea name="description" class="form-control textarea w-100 p-3 border-2 border-dark" placeholder="Project Description (max 1000 characters)" maxlength="1000" th:text="${project.description}"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>Cost Estimates:</label>
+                    <textarea name="materialSchedule" class="form-control textarea w-100 p-3 border-2 border-dark" placeholder="Cost Estimates (max 1000 characters)" maxlength="1000" th:text="${project.materialSchedule}"></textarea>
                </div>
 
-               <div class="mb-3">
-                   <label>Project Description:</label>
-                   <textarea name="description" class="form-control textarea w-100 p-3 border-2 border-dark" placeholder="Project Description" th:text="${project.description}"></textarea>
-               </div>
+                <div class="mb-3">
+                    <label>Number of Floors:</label>
+                    <input type="text" name="numberOfFloors" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.numberOfFloors}" required />
+                </div>
 
-               <div class="mb-3">
-                   <label>Cost Estimates:</label>
-                   <textarea name="materialSchedule" class="form-control textarea w-100 p-3 border-2 border-dark" placeholder="Cost Estimates" th:text="${project.materialSchedule}"></textarea>
-               </div>
+                <div class="mb-3">
+                    <label>Number of Bedrooms / Apartment Sub-category:</label>
+                    <input type="text" name="numberOfBedrooms" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.numberOfBedrooms}" required />
+                </div>
 
-               <div class="mb-3">
-                   <label>Number of Floors:</label>
-                   <input type="number" name="numberOfFloors" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.numberOfFloors}" required />
-               </div>
+                <div class="mb-3">
+                    <label>Number of Bathrooms:</label>
+                    <input type="text" name="numberOfBathrooms" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.numberOfBathrooms}" />
+                </div>
 
-               <div class="mb-3">
-                   <label>Number of Bedrooms:</label>
-                   <input type="number" name="numberOfBedrooms" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.numberOfBedrooms}" required />
-               </div>
+                <div class="mb-3">
+                    <label>Area of House / Floor Area:</label>
+                    <input type="text" name="areaOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.areaOfHouse}" required />
+                </div>
 
-               <div class="mb-3">
-                   <label>Number of Bathrooms:</label>
-                   <input type="number" name="numberOfBathrooms" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.numberOfBathrooms}" required />
-               </div>
+                <div class="mb-3">
+                    <label>Width of House:</label>
+                    <input type="text" name="widthOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.widthOfHouse}" />
+                </div>
 
-               <div class="mb-3">
-                   <label>Area of House:</label>
-                   <input type="text" name="areaOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.areaOfHouse}" required />
-               </div>
-
-               <div class="mb-3">
-                   <label>Width of House:</label>
-                   <input type="text" name="widthOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.widthOfHouse}" required />
-               </div>
-
-               <div class="mb-3">
-                   <label>Depth of House:</label>
-                   <input type="text" name="depthOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.depthOfHouse}" required />
-               </div>
+                <div class="mb-3">
+                    <label>Depth of House:</label>
+                    <input type="text" name="depthOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" th:value="${project.depthOfHouse}" />
+                </div>
 
             <div class="row">
                 <div class="mb-3 col-md-4">
@@ -133,6 +144,21 @@
        </div>
 
    </div>
+    <script>
+        function toggleEditApartmentFields() {
+            var categorySelect = document.getElementById("editCategorySelect");
+            var unitsContainer = document.getElementById("editUnitsPerFloorContainer");
+            var plotContainer = document.getElementById("editPlotSizeContainer");
+            if (categorySelect && categorySelect.value === "APARTMENTS") {
+                unitsContainer.style.display = "block";
+                plotContainer.style.display = "block";
+            } else {
+                unitsContainer.style.display = "none";
+                plotContainer.style.display = "none";
+            }
+        }
+    </script>
+</div>
 </div>
 
 

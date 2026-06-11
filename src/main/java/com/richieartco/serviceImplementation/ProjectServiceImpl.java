@@ -103,6 +103,12 @@ public class ProjectServiceImpl implements ProjectService {
     ) throws IOException {
 
        try{
+           if (project.getDescription() != null && project.getDescription().length() > 1000) {
+               project.setDescription(project.getDescription().substring(0, 1000));
+           }
+           if (project.getMaterialSchedule() != null && project.getMaterialSchedule().length() > 1000) {
+               project.setMaterialSchedule(project.getMaterialSchedule().substring(0, 1000));
+           }
            project.setThumbnailImage(uploadImage(thumbnailFile));
            project.setImageUrl1(uploadImage(imageFile1));
            project.setImageUrl2(uploadImage(imageFile2));
@@ -186,10 +192,18 @@ public class ProjectServiceImpl implements ProjectService {
                 existingProject.setCategory(updatedProject.getCategory());
             }
             if (updatedProject.getDescription() != null && !updatedProject.getDescription().isEmpty()) {
-                existingProject.setDescription(updatedProject.getDescription());
+                String desc = updatedProject.getDescription();
+                if (desc.length() > 1000) {
+                    desc = desc.substring(0, 1000);
+                }
+                existingProject.setDescription(desc);
             }
             if (updatedProject.getMaterialSchedule() != null && !updatedProject.getMaterialSchedule().isEmpty()) {
-                existingProject.setMaterialSchedule(updatedProject.getMaterialSchedule());
+                String schedule = updatedProject.getMaterialSchedule();
+                if (schedule.length() > 1000) {
+                    schedule = schedule.substring(0, 1000);
+                }
+                existingProject.setMaterialSchedule(schedule);
             }
             if (updatedProject.getNumberOfFloors() != null) {
                 existingProject.setNumberOfFloors(updatedProject.getNumberOfFloors());
@@ -208,6 +222,12 @@ public class ProjectServiceImpl implements ProjectService {
             }
             if (updatedProject.getDepthOfHouse() != null && !updatedProject.getDepthOfHouse().isEmpty()) {
                 existingProject.setDepthOfHouse(updatedProject.getDepthOfHouse());
+            }
+            if (updatedProject.getUnitsPerFloor() != null) {
+                existingProject.setUnitsPerFloor(updatedProject.getUnitsPerFloor());
+            }
+            if (updatedProject.getPlotSize() != null) {
+                existingProject.setPlotSize(updatedProject.getPlotSize());
             }
 
             if (!thumbnailFile.isEmpty()) {

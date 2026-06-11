@@ -275,22 +275,32 @@
                         </div>
                         <div class="mb-3">
                             <label>Category:</label>
-                            <select name="category" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0"  >
-
+                            <select name="category" id="adminCategorySelect" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" onchange="toggleApartmentFields()">
                                 <option>SINGLE FLOOR</option>
                                 <option>STORIED HOUSES</option>
+                                <option>APARTMENTS</option>
                             </select>
+                        </div>
+
+                        <div class="mb-3" id="unitsPerFloorContainer" style="display: none;">
+                            <label>Units per Floor:</label>
+                            <input type="text" name="unitsPerFloor" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" placeholder="e.g. 2" />
+                        </div>
+
+                        <div class="mb-3" id="plotSizeContainer" style="display: none;">
+                            <label>Plot Size & Style:</label>
+                            <input type="text" name="plotSize" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" placeholder="e.g. 50x100 plot - Option F" />
                         </div>
 
 
                         <div class="mb-3">
                             <label>Project Description:</label>
-                            <textarea name="description"  class="form-control  textarea  w-100 p-3 border-2 border-dark" placeholder="Project Description"></textarea>
+                            <textarea name="description" class="form-control textarea w-100 p-3 border-2 border-dark" placeholder="Project Description (max 1000 characters)" maxlength="1000"></textarea>
                         </div>
 
                         <div class="mb-3">
                             <label>Cost Estimates:</label>
-                            <textarea name="materialSchedule"  class="form-control  textarea  w-100 p-3 border-2 border-dark" placeholder="Cost Estimates"></textarea>
+                            <textarea name="materialSchedule" class="form-control textarea w-100 p-3 border-2 border-dark" placeholder="Cost Estimates (max 1000 characters)" maxlength="1000"></textarea>
                         </div>
 
                         <div class="mb-3">
@@ -299,28 +309,28 @@
                         </div>
 
                         <div class="mb-3">
-                            <label>Number of Bedrooms:</label>
-                            <input type="number" name="numberOfBedrooms" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" required />
+                            <label>Number of Bedrooms / Apartment Sub-category:</label>
+                            <input type="text" name="numberOfBedrooms" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" placeholder="e.g. 3 or 1BHK Apartments" required />
                         </div>
 
                         <div class="mb-3">
                             <label>Number of Bathrooms:</label>
-                            <input type="number" name="numberOfBathrooms" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" required />
+                            <input type="text" name="numberOfBathrooms" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" placeholder="e.g. 2 (Leave blank for Apartments)" />
                         </div>
 
                         <div class="mb-3">
-                            <label>Area of House:</label>
-                            <input type="text" name="areaOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" required />
+                            <label>Area of House / Floor Area:</label>
+                            <input type="text" name="areaOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" placeholder="e.g. 120" required />
                         </div>
 
                         <div class="mb-3">
                             <label>Width of House:</label>
-                            <input type="text" name="widthOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" required />
+                            <input type="text" name="widthOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" placeholder="e.g. 12 (Leave blank for Apartments)" />
                         </div>
 
                         <div class="mb-3">
                             <label>Depth of House:</label>
-                            <input type="text" name="depthOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" required />
+                            <input type="text" name="depthOfHouse" class="form-control border-0 border-bottom border-3 bg-light border-dark rounded-0" placeholder="e.g. 15 (Leave blank for Apartments)" />
                         </div>
 
                         <!-- Add other input fields as needed based on the Project model -->
@@ -718,19 +728,29 @@
 
 
     <script>
+        function toggleApartmentFields() {
+            var categorySelect = document.getElementById("adminCategorySelect");
+            var unitsContainer = document.getElementById("unitsPerFloorContainer");
+            var plotContainer = document.getElementById("plotSizeContainer");
+            if (categorySelect && categorySelect.value === "APARTMENTS") {
+                unitsContainer.style.display = "block";
+                plotContainer.style.display = "block";
+            } else {
+                unitsContainer.style.display = "none";
+                plotContainer.style.display = "none";
+            }
+        }
 
         // Call loadCategories when the 'Categories' button is clicked
-
         $('.sidenavoption[data-target-content="categories"]').on('click', function () {
             changeOption(this); // Assuming this function shows/hides the appropriate content
             loadCategories();   // Load categories dynamically
         });
 
-           $('.sidenavoption[data-target-content="newproject"]').on('click', function () {
+        $('.sidenavoption[data-target-content="newproject"]').on('click', function () {
             changeOption(this); // Assuming this function shows/hides the appropriate content
             //loadCategoriesDropdown();   // Load categories dynamically
         });
-
     </script>
 </div>
 </body>

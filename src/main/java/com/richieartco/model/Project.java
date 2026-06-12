@@ -286,6 +286,10 @@ public class Project {
             if (unitsPerFloor != null && !unitsPerFloor.trim().isEmpty()) {
                 specs.add(unitsPerFloor + " Units/Floor");
             }
+            // Bathrooms
+            if (numberOfBathrooms != null && !numberOfBathrooms.trim().isEmpty()) {
+                specs.add(numberOfBathrooms + " Bathrooms");
+            }
             // Area per floor
             if (areaOfHouse != null && !areaOfHouse.trim().isEmpty()) {
                 specs.add(areaOfHouse + " sq.m - Area/Floor");
@@ -293,6 +297,14 @@ public class Project {
             // Plot Size
             if (plotSize != null && !plotSize.trim().isEmpty()) {
                 specs.add(plotSize);
+            }
+            // Width
+            if (widthOfHouse != null && !widthOfHouse.trim().isEmpty()) {
+                specs.add(widthOfHouse + "m - Wide");
+            }
+            // Depth
+            if (depthOfHouse != null && !depthOfHouse.trim().isEmpty()) {
+                specs.add(depthOfHouse + "m - Deep");
             }
         } else {
             // House specs
